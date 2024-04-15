@@ -25,3 +25,14 @@ Site para avaliação e recomendação de filmes.
 - [ ] Os dados da aplicação precisam estar persistido em um banco PostgreSQL;
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
 - [ ] Todas as listas de dados precisam estar paginadas com 20 itens por página;
+
+## Setup
+Para rodar o PostgreSQL no Docker
+```
+sudo docker compose up -d
+ ```
+
+ Para rodar a API
+ ```
+npm run dev
+ ```
