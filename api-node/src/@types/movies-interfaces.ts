@@ -9,9 +9,12 @@ export interface MovieRequest {
 
 export interface Movie {
     id: string;
-    name: string;
-    release_date: string;
+    title: string;
+    release_date: Date;
     gender: string;
-    synopsis: string;
-    user_likes: User[];
+    description: string;
+    image?: string;
+    watched_by: User[];
+    created_at: Date;
+    updated_at: Date;
 }

@@ -48,9 +48,9 @@ model UserMovieRating {
   rating Int
 
   // Foreign key
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
-  movie   Movie  @relation(fields: [movieId], references: [id])
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
   movieId String
 
   @@unique([userId, movieId])
