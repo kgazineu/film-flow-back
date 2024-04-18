@@ -1,27 +1,24 @@
-import { ResetPassCode } from "./reset-pass-code-interface";
+import { UserMovieRating } from "./movie-rating-interfaces";
+import { Movie } from "./movies-interfaces";
+import { ResetPassCode } from "./reset-pass-code-interfaces";
 
-export interface UserRequest {
+
+export interface User {
+    id: string;
     name: string;
-    nickname: string;
+    nickname: string | null;
+    email: string;
+    password_hash: string;
+    created_at: Date;
+    updated_at: Date;
+    ratings: UserMovieRating[];
+    watch_list: Movie[];
+    reset_pass_code: ResetPassCode | null;
+  }
+
+export interface UserRegisterRequest {
+    name: string;
+    nickname: string | null;
     email: string;
     password: string;
-}
-
-// export interface User {
-//     id: string;
-//     name: string;
-//     nickname: string;
-//     email: string;
-//     ResetPassCode?: ResetPassCode;
-//     watch_list: string[];
-//     liked_movies: string[];
-//     created_at: Date;
-//     updated_at: Date;
-// }
-
-export interface UserUpdateRequest {
-    id: string;
-    name?: string;
-    nickname?: string;
-    email?: string;
-}
+}  

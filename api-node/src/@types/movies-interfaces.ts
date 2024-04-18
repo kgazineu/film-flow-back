@@ -1,4 +1,5 @@
 import { User } from "./users-interfaces";
+import { UserMovieRating } from "./movie-rating-interfaces";
 
 export interface MovieRequest {
     name: string;
@@ -13,8 +14,9 @@ export interface Movie {
     release_date: Date;
     gender: string;
     description: string;
-    image?: string;
-    watched_by: User[];
+    image: string | null;
     created_at: Date;
     updated_at: Date;
-}
+    watched_by: User[];
+    user_movie_rating: UserMovieRating[];
+  }
