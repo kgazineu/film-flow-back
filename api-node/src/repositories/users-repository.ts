@@ -1,6 +1,5 @@
-import { UserRegisterRequest } from "@/@types/users-interfaces";
-import { User } from "@prisma/client";
-
+import { UserRegisterRequest } from '@/@types/users-interfaces'
+import { User } from '@prisma/client'
 
 export interface UsersRepository {
     create(data: UserRegisterRequest): Promise<User>

@@ -28,11 +28,13 @@ Site para avaliação e recomendação de filmes.
 
 ## Setup
 Para rodar o PostgreSQL no Docker
-```
-sudo docker compose up -d
- ```
 
- Para rodar a API
- ```
-npm run dev
- ```
+```
+    sudo docker compose up -d
+```
+
+Para rodar a API
+
+```
+    npm run dev
+```

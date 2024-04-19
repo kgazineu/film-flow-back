@@ -1,9 +1,5 @@
-import { User } from './users-interfaces';
-import { UserMovieRating } from './movie-rating-interfaces';    
-
-export interface ResetPassCode {
-    code: string;
-    expires_in: Date;
+export interface ResetPassCodeRequest {
     userId: string;
-    user: User;
-  }
+    expires_in: Date;
+    code: string;
+}

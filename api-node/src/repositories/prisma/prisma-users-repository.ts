@@ -1,6 +1,6 @@
-import { UsersRepository } from "../users-repository";
-import { User, UserRegisterRequest } from "../../@types/users-interfaces";
-import { prisma } from "@/lib/prisma";
+import { UsersRepository } from '../users-repository'
+import { UserRegisterRequest } from '../../@types/users-interfaces'
+import { prisma } from '@/lib/prisma'
 
 export class PrismaUsersRepository implements UsersRepository {
     async create(data: UserRegisterRequest) {
