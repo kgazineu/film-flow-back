@@ -24,5 +24,5 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
         password,
     })
 
-    return reply.status(200).send(user)
+    return reply.status(201).send(user)
 }
