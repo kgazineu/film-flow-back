@@ -23,7 +23,30 @@ describe('Register (e2e)', it => {
 
         expect(response.status).toEqual(201)
     })
+
+    it('should not be able to register with the same email', async () => {
+        const response = await request(app.server)
+            .post('/register')
+            .send({
+                name: 'test',
+                nickname: 'icaro',
+                email: 'test@gmail.com',
+                password: 'teste123',
+            })
+        
+        expect(response.status).toEqual(409)
+    })
+
+    it('should not be able to register with the same nickname', async () => {
+        const response = await request(app.server)
+            .post('/register')
+            .send({
+                name: 'test',
+                nickname: 'icaro',
+                email: 'test2agasg@gmail.com',
+                password: 'teste123'
+            })
+        
+        expect(response.status).toEqual(409)
+    })
 })
-
-
-

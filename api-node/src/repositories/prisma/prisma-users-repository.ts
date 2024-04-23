@@ -12,12 +12,29 @@ export class PrismaUsersRepository implements UsersRepository {
                 password_hash: data.password
             }
         })
+        
         return user
     }
 
-    // async findByEmail(email: string) {
-    //     // código do Prisma
-    // }
+    async findByEmail(email: string) {
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        })
+
+        return user
+    }
+
+    async findByNickname(nickname: string) {
+        const user = await prisma.user.findUnique({
+            where: {
+                nickname
+            }
+        })
+
+        return user
+    }
 
     // async findById(id: string) {
     //     // código do Prisma

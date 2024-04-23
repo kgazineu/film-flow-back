@@ -1,5 +1,7 @@
 import { UsersRepository } from '@/repositories/users-repository'
 import { UserRegisterRequest } from '@/@types/users-interfaces'
+import { UserAlreadyExistsError } from '../errors/user-already-exists-error'
+import { hash } from 'bcryptjs'
 
 export class RegisterUseCase {
     constructor (private usersRepository: UsersRepository) {}
@@ -11,20 +13,35 @@ export class RegisterUseCase {
         password,
     }: UserRegisterRequest){
 
-        // Validar se o usuário ja existe aqui
+        const userWithSameEmail = await this.usersRepository.findByEmail(email)
 
-        // Criptografar a senha do usuário aqui
+        if (userWithSameEmail) {
+            throw new UserAlreadyExistsError()
+        }
+
+        let userWithSameNickname = null
+
+        if (nickname) {
+            userWithSameNickname = await this.usersRepository.findByNickname(nickname)
+
+            if (userWithSameNickname) {
+                throw new UserAlreadyExistsError()
+            }
+        }
+
+        if (userWithSameNickname) {
+            throw new UserAlreadyExistsError()
+        }
+
+        const passwordHash = await hash(password, 6)
 
         const user = await this.usersRepository.create({
             name,
             nickname,
             email,
-            password,
+            password: passwordHash,
         })
-    
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password_hash , ...userWithoutPassword } = user
 
-        return userWithoutPassword
+        return user
     }
 }
