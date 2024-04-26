@@ -2,10 +2,6 @@ import { afterAll, beforeAll, describe, expect } from 'vitest'
 import { app } from '@/app'
 import request from 'supertest'
 
-// test('asgasgasg', ()  => {
-//     expect(2 + 2).toBe(4)
-// })
-
 describe('Login (e2e)', it => {
     beforeAll(async () => {
         await app.ready()
@@ -13,7 +9,6 @@ describe('Login (e2e)', it => {
             .post('/register')
             .send({
                 name: 'test',
-                nickname: 'icaro',
                 email: 'test@gmail.com',
                 password: 'teste123',
             })
@@ -32,6 +27,17 @@ describe('Login (e2e)', it => {
             })
 
         expect(response.status).toEqual(200)
+        expect(response.body).toEqual({
+            userWithoutPassword: {
+                id: expect.any(String),
+                name: 'test',
+                nickname: null,
+                email: 'test@gmail.com',
+                created_at: expect.any(String),
+                updated_at: expect.any(String),
+            },
+            token: expect.any(String),
+        })
     })
 
     it('should not be able to login with invalid credentials', async () => {
@@ -43,6 +49,7 @@ describe('Login (e2e)', it => {
             })
 
         expect(response.status).toEqual(401)
+        expect(response.body).toEqual({ message: 'Invalid credentials.' })
     })
 
     it('should not be able to login if user not registered', async () => {
@@ -54,5 +61,7 @@ describe('Login (e2e)', it => {
             })
 
         expect(response.status).toEqual(404)
+        expect(response.body).toEqual({ message: 'User not found.' })
     })
+
 })
