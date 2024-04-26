@@ -4,13 +4,21 @@ Site para avaliação e recomendação de filmes.
 
 ## RFs (Requisitos funcionais)
 
-- [ ] Deve ser possível se cadastrar;
-- [ ] Deve ser possível se autenticar;
-- [ ] Deve ser possível obter o perfil de um usuário logado;
+- [x] Deve ser possível se cadastrar;
+- [x] Deve ser possível se autenticar;
+- [x] Deve ser possível obter o perfil de um usuário logado;
 - [ ] Deve ser possível avaliar um filme;
 - [ ] Deve ser possível escrever uma crítica sobre um filme;
 - [ ] Deve ser possível salvar um filme para assistir depois;
 - [ ] O usuário deve receber recomendações de filmes com base em suas avaliações;
+
+## Testes
+
+- [x] Teste de cadastro;
+- [ ] Teste de autenticação;
+- [ ] Teste de avaliação de filme;
+- [ ] Teste de crítica de filme;
+- [ ] Teste de salvar filme para assistir depois;
 
 ## RNs (Regras de negócio)
 
