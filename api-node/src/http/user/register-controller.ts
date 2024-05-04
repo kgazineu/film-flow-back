@@ -8,7 +8,7 @@ import { z } from 'zod'
 export async function register(req: FastifyRequest, reply: FastifyReply) {
     const registerBodySchema = z.object({
         name: z.string(),
-        nickname: z.string(),
+        nickname: z.string().optional(),
         email: z.string().email(),
         password: z.string().min(8),
     })
@@ -22,7 +22,7 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password_hash, ...userWithoutPassword } = await registerUseCase.handle({
             name,
-            nickname,
+            nickname: nickname || null,
             email,
             password,
         })

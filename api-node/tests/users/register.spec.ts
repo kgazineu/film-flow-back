@@ -22,6 +22,14 @@ describe('Register (e2e)', it => {
             })
 
         expect(response.status).toEqual(201)
+        expect(response.body).toEqual({
+            id: expect.any(String),
+            name: 'test',
+            nickname: 'icaro',
+            email: 'test@gmail.com',
+            created_at: expect.any(String),
+            updated_at: expect.any(String),
+        })
     })
 
     it('should not be able to register with the same email', async () => {
@@ -35,6 +43,7 @@ describe('Register (e2e)', it => {
             })
         
         expect(response.status).toEqual(409)
+        expect(response.body).toEqual({ message: 'User already exists.' })
     })
 
     it('should not be able to register with the same nickname', async () => {
@@ -48,5 +57,6 @@ describe('Register (e2e)', it => {
             })
         
         expect(response.status).toEqual(409)
+        expect(response.body).toEqual({ message: 'User already exists.' })
     })
 })
