@@ -35,6 +35,7 @@ model Movie {
   gender       String
   description  String
   popularity   Float
+  rating       Float    @default(0)
   runtime      Int
   image        String?
   created_at   DateTime @default(now())
@@ -47,7 +48,7 @@ model Movie {
 
 model UserMovieRating {
   id     String @id @default(uuid())
-  rating Int
+  rating Float
 
   // Foreign key
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
