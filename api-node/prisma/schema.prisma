@@ -31,9 +31,11 @@ model User {
 model Movie {
   id           String   @id @default(uuid())
   title        String
-  release_date DateTime
+  release_year Int
   gender       String
   description  String
+  popularity   Float
+  runtime      Int
   image        String?
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt

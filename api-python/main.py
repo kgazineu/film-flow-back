@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.sql import func
@@ -26,9 +26,11 @@ class Movie(Base):
 
     id = Column(String, primary_key=True)
     title = Column(String)
-    release_date = Column(DateTime)
+    release_year = Column(Integer)
     gender = Column(String)
     description = Column(String)
+    popularity = Column(Float)
+    runtime = Column(Integer)
     image = Column(String)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
@@ -36,19 +38,22 @@ class Movie(Base):
 @app.get("/movies")
 def add_movie():
     db = SessionLocal()
-    with open('shared/imdb_top_1000.csv', 'r') as f:
-        reader = csv.reader(f)
+    with open('shared/movie_data.csv', 'r') as f:
+        reader = csv.reader(f, delimiter=';')
         next(reader)
         for row in reader:
+            popularity = float(row[7].replace(',', '.'))
             new_movie = Movie(
-                id=str(uuid4()),  # Gera um ID único para o filme
-                image=row[0],
-                title=row[1],
-                gender=row[5],
-                description=row[7],
-                release_date="1970-01-01T00:00:00.000Z",
-                created_at=datetime.now(),
-                updated_at=datetime.now()
+                id = row[0],
+                gender = row[1],
+                image = f"https://a.ltrbxd.com/resized/{row[2]}.jpg",
+                title = row[5],
+                description = row[6],
+                popularity = popularity,
+                runtime = row[8],
+                release_year = row[9],
+                created_at = datetime.now(),
+                updated_at = datetime.now()
             )
             db.add(new_movie)
             db.commit()
