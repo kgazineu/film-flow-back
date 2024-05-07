@@ -1,32 +1,62 @@
-from fastapi import FastAPI
-from sqlalchemy import create_engine, Column, Integer, String, Table, MetaData
+from fastapi import FastAPI, HTTPException
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-
-DATABASE_URL = "postgresql://filmflow:password@localhost:5432/filmflow"
-
-metadata = MetaData(schema="my_schema")
-
-engine = create_engine(DATABASE_URL)
-
-my_table = Table("my_table", metadata, autoload_with=engine)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base = declarative_base()
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    email = Column(String, unique=True, index=True)
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import UUID
+from pydantic import BaseModel
+from datetime import datetime
+from uuid import uuid4
+import csv
 
 app = FastAPI()
+DATABASE_URL = "postgresql://filmflow:password@localhost:5432/filmflow"
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
 
-@app.get("/users")
-def get_user():
+class MovieBase(BaseModel):
+    title: str
+    release_date: datetime
+    gender: str
+    description: str
+    image: str = None
+class Movie(Base):
+    __tablename__ = "Movie"
+
+    id = Column(String, primary_key=True)
+    title = Column(String)
+    release_year = Column(Integer)
+    gender = Column(String)
+    description = Column(String)
+    popularity = Column(Float)
+    runtime = Column(Integer)
+    image = Column(String)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+@app.get("/movies")
+def add_movie():
     db = SessionLocal()
-    users = db.query(User).all()
-    return users
-
+    with open('shared/movie_data.csv', 'r') as f:
+        reader = csv.reader(f, delimiter=';')
+        next(reader)
+        for row in reader:
+            popularity = float(row[7].replace(',', '.'))
+            new_movie = Movie(
+                id = row[0],
+                gender = row[1],
+                image = f"https://a.ltrbxd.com/resized/{row[2]}.jpg",
+                title = row[5],
+                description = row[6],
+                popularity = popularity,
+                runtime = row[8],
+                release_year = row[9],
+                created_at = datetime.now(),
+                updated_at = datetime.now()
+            )
+            db.add(new_movie)
+            db.commit()
+            db.refresh(new_movie)
+    db.close()
+    return {"message": "Movies added successfully"}
