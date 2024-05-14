@@ -7,7 +7,9 @@ from sqlalchemy.dialects.postgresql import UUID
 from pydantic import BaseModel
 from datetime import datetime
 from uuid import uuid4
+from generate_similarity_csv import get_recommendations
 import csv
+import pandas as pd
 
 app = FastAPI()
 DATABASE_URL = "postgresql://filmflow:password@localhost:5432/filmflow"
@@ -60,3 +62,13 @@ def add_movie():
             db.refresh(new_movie)
     db.close()
     return {"message": "Movies added successfully"}
+
+class Movie(BaseModel):
+    title: str
+
+@app.post("/recommendations")
+async def recommendation(movie: Movie):
+    recommendations = get_recommendations(movie.title)
+    recommendations_list = recommendations.index.to_list()
+    recommendations_list.pop(0)
+    return {"recommendations": recommendations_list}
