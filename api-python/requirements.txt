@@ -1,1 +1,4 @@
-SQLAlchemy
+sqlalchemy
+pandas
+numpy
+sklearn
