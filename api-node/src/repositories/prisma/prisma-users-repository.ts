@@ -36,6 +36,37 @@ export class PrismaUsersRepository implements UsersRepository {
         return user
     }
 
+    async findUserMovieRatingById(userId: string, movieId: string) {
+        const userMovieRating = await prisma.userMovieRating.findFirst({
+            where: {
+                userId,
+                movieId
+            }
+        })
+
+        return userMovieRating
+    }
+
+    async createUserMovieRating(userId: string, movieId: string, rating: number) {
+        const userMovieRating = await prisma.userMovieRating.create({
+            data: {
+                rating: rating,
+                userId: userId,
+                movieId: movieId
+            },
+            include: {
+                movie: {
+                    select: {
+                        rating: true,
+                        user_movie_rating: true
+                    }
+                }
+            }
+        })
+
+        return userMovieRating
+    }
+
     // async findById(id: string) {
     //     // código do Prisma
     // }

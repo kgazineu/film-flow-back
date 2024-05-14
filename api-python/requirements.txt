@@ -2,3 +2,5 @@ sqlalchemy
 pandas
 numpy
 sklearn
+pydantic
+fastapi
