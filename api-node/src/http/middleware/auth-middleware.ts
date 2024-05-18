@@ -13,7 +13,6 @@ export async function verifyJWT(request: FastifyRequest, reply: FastifyReply) {
             return reply.status(401).send({message: 'Token inválido ou expirado.'})
         }
 
-        console.log('RODEI O JWT')
     } catch (error) {
         console.log(error)
         return reply.status(401).send({message: 'Token inválido ou expirado.'})
