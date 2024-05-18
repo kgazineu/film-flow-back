@@ -67,9 +67,28 @@ export class PrismaUsersRepository implements UsersRepository {
         return userMovieRating
     }
 
-    // async findById(id: string) {
-    //     // código do Prisma
-    // }
+    async findById(id: string) {
+        const user = await prisma.user.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return user
+    }
+
+    async updatePassword({userId, password}: {userId: string, password: string}) {
+        const user = await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                password_hash: password
+            }
+        })
+
+        return user
+    }
 
     // async update(data: UserUpdateRequest) {
     //     // código do Prisma

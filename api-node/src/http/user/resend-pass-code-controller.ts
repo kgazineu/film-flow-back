@@ -1,6 +1,4 @@
 import { PrismaResetPassCodeRepository } from '@/repositories/prisma/prisma-reset-pass-code-repository'
-import { CodeAlreadyExistsError } from '@/use-case/errors/code-already-exist-error'
-import { UserNotFound } from '@/use-case/errors/user-not-found-error'
 import { VerifyCodeStillValid } from '@/use-case/errors/verify-code-still-valid-error'
 import { ResendVerifyCodeUseCase } from '@/use-case/users/resend-code-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
@@ -30,7 +28,6 @@ export async function RecoverResendPassCode(req: FastifyRequest, reply: FastifyR
         })
     } catch(error) {
         if(error instanceof VerifyCodeStillValid) {
-            console.log(error)
             return reply.status(401).send({message: error.message})
         }
 

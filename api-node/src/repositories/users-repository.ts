@@ -7,7 +7,8 @@ export interface UsersRepository {
     findByNickname(nickname: string): Promise<User | null>
     findUserMovieRatingById(userId: string, movieId: string): Promise<UserMovieRating | null>
     createUserMovieRating(userId: string, movieId: string, rating: number): Promise<UserMovieRating>
-    // findById(id: string): Promise<User | null>
+    findById(id: string): Promise<User | null>
+    updatePassword({userId, password}: {userId: string, password: string}): Promise<User>
     // update(data: UserUpdateRequest): Promise<User>
     // delete(id: string): Promise<void>
 }

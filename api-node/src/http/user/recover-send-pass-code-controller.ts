@@ -29,11 +29,9 @@ export async function RecoverSendPassCode(req: FastifyRequest, reply: FastifyRep
         })
     } catch(error) {
         if (error instanceof CodeAlreadyExistsError) {
-            console.log(error)
             return reply.status(409).send({message: error.message})
         }
         if(error instanceof UserNotFound) {
-            console.log(error)
             return reply.status(404).send({message: error.message})
         }
 
