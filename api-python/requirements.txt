@@ -1,6 +1,6 @@
 sqlalchemy
 pandas
 numpy
-sklearn
+scrikit-learn
 pydantic
 fastapi
