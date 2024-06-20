@@ -1,5 +1,5 @@
 import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
-import { InvalidCredentialsError } from '@/use-case/errors/invalid-credentials'
+import { InvalidCredentialsError } from '@/use-case/errors/invalid-credentials-error'
 import { UserNotFound } from '@/use-case/errors/user-not-found-error'
 import { LoginUseCase } from '@/use-case/users/login-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
